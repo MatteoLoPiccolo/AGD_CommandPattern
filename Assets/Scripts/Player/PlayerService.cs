@@ -1,5 +1,6 @@
 using Command.Actions;
 using Command.Main;
+using Commands;
 
 namespace Command.Player
 {
@@ -65,9 +66,29 @@ namespace Command.Player
                 activePlayer = activePlayer == player1 ? player2 : player1;
         }
 
+        private void SetUnitReferences(UnitCommand commandToProcess)
+        {
+            // Get actor and target units based on the command data.
+            var actorUnit = GetPlayerById(commandToProcess.commandData.ActorPlayerID).GetUnitByID(commandToProcess.commandData.ActorUnitID);
+            var targetUnit = GetPlayerById(commandToProcess.commandData.TargetPlayerID).GetUnitByID(commandToProcess.commandData.TargetUnitID);
+
+            // Set the actor and target units for the command.
+            commandToProcess.SetActorUnit(actorUnit);
+            commandToProcess.SetTargetUnit(targetUnit);
+        }
+
         public void OnPlayerTurnCompleted() => StartNextTurn();
 
         public void PerformAction(CommandType actionSelected, UnitController targetUnit) => GameService.Instance.ActionService.GetActionByType(actionSelected).PerformAction(activePlayer.GetUnitByID(ActiveUnitID), targetUnit, isSuccessful);
+
+        public void ProcessUnitCommand(UnitCommand commandToProcess)
+        {
+            // Set unit references for the command.
+            SetUnitReferences(commandToProcess);
+
+            // Delegate unit command processing to the corresponding player.
+            GetPlayerById(commandToProcess.commandData.ActorPlayerID).ProcessUnitCommand(commandToProcess);
+        }
 
         public void PlayerDied(PlayerController deadPlayer)
         {
@@ -98,5 +119,7 @@ namespace Command.Player
             else if (player2.AllUnitsDead())
                 PlayerDied(player2);
         }
+
+        
     }
 }

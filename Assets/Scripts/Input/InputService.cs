@@ -12,6 +12,7 @@ namespace Command.Input
         private InputState currentState;
         private CommandType selectedActionType;
         private TargetType targetType;
+
         private CommandType selectedCommandType;
 
         public InputService()
@@ -34,6 +35,7 @@ namespace Command.Input
         public void OnActionSelected(CommandType selectedActionType)
         {
             this.selectedActionType = selectedActionType;
+            this.selectedCommandType = selectedActionType;
             SetInputState(InputState.SELECTING_TARGET);
             TargetType targetType = SetTargetType(selectedActionType);
             ShowTargetSelectionUI(targetType);
