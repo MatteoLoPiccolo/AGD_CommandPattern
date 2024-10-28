@@ -11,6 +11,8 @@ namespace Command.Player
         private int currentTurnNumber;
         private PlayerController activePlayer;
 
+        private bool isSuccessful;
+
         public int ActivePlayerID => activePlayer.PlayerID;
         public int ActiveUnitID => activePlayer.ActiveUnitID;
 
@@ -65,7 +67,7 @@ namespace Command.Player
 
         public void OnPlayerTurnCompleted() => StartNextTurn();
 
-        public void PerformAction(ActionType actionSelected, UnitController targetUnit) => GameService.Instance.ActionService.GetActionByType(actionSelected).PerformAction(activePlayer.GetUnitByID(ActiveUnitID), targetUnit);
+        public void PerformAction(CommandType actionSelected, UnitController targetUnit) => GameService.Instance.ActionService.GetActionByType(actionSelected).PerformAction(activePlayer.GetUnitByID(ActiveUnitID), targetUnit, isSuccessful);
 
         public void PlayerDied(PlayerController deadPlayer)
         {
