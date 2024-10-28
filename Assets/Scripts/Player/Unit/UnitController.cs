@@ -4,6 +4,7 @@ using Command.Actions;
 using System.Collections;
 using System;
 using Object = UnityEngine.Object;
+using Commands;
 
 namespace Command.Player
 {
@@ -22,6 +23,8 @@ namespace Command.Player
         private Vector3 originalPosition;
         public int CurrentPower;
         public int CurrentMaxHealth;
+
+        public void ProcessUnitCommand(UnitCommand commandToProcess) => GameService.Instance.CommandInvoker.ProcessCommand(commandToProcess);
 
         public UnitController(PlayerController owner, UnitScriptableObject unitScriptableObject, Vector3 unitPosition)
         {

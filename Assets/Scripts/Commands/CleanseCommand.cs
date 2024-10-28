@@ -1,18 +1,20 @@
 using Command.Main;
 using Command.Actions;
-using Commands;
 
-public class CleanseCommand : UnitCommand
+namespace Commands
 {
-    private bool willHitTarget;
-
-    public CleanseCommand(CommandData commandData)
+    public class CleanseCommand : UnitCommand
     {
-        this.commandData = commandData;
-        willHitTarget = WillHitTarget();
+        private bool willHitTarget;
+
+        public CleanseCommand(CommandData commandData)
+        {
+            this.commandData = commandData;
+            willHitTarget = WillHitTarget();
+        }
+
+        public override bool WillHitTarget() => true;
+
+        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
     }
-
-    public override bool WillHitTarget() => true;
-
-    public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
 }
