@@ -9,6 +9,8 @@ using Command.Events;
 using Command.Battle;
 using Command.Actions;
 using UnityEngine.UI;
+using Commands;
+using System;
 
 namespace Command.Main
 {
@@ -52,5 +54,10 @@ namespace Command.Main
         }
 
         private void Update() => InputService.UpdateInputService();
+
+        internal void ProcessUnitCommand(UnitCommand commandToProcess)
+        {
+            //TODO
+        }
     }
 }

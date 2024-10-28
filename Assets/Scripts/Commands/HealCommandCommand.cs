@@ -2,11 +2,11 @@ using Command.Main;
 using Command.Actions;
 using Commands;
 
-public class BerserkAttack : UnitCommands
+public class HealCommandCommand : UnitCommand
 {
     private bool willHitTarget;
 
-    public BerserkAttack(CommandData commandData)
+    public HealCommandCommand(CommandData commandData)
     {
         this.commandData = commandData;
         willHitTarget = WillHitTarget();

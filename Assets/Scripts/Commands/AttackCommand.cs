@@ -2,7 +2,7 @@ using Command.Main;
 using Command.Actions;
 using Commands;
 
-public class AttackCommand : UnitCommands
+public class AttackCommand : UnitCommand
 {
     private bool willHitTarget;
 

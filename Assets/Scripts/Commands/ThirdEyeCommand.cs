@@ -2,11 +2,11 @@ using Command.Main;
 using Command.Actions;
 using Commands;
 
-public class Cleanse : UnitCommands
+public class ThirdEyeCommand : UnitCommand
 {
     private bool willHitTarget;
 
-    public Cleanse(CommandData commandData)
+    public ThirdEyeCommand(CommandData commandData)
     {
         this.commandData = commandData;
         willHitTarget = WillHitTarget();
