@@ -2,11 +2,11 @@ using Command.Main;
 using Command.Actions;
 using Commands;
 
-public class Meditate : UnitCommands
+public class BerserkAttackCommand : UnitCommand
 {
     private bool willHitTarget;
 
-    public Meditate(CommandData commandData)
+    public BerserkAttackCommand(CommandData commandData)
     {
         this.commandData = commandData;
         willHitTarget = WillHitTarget();
