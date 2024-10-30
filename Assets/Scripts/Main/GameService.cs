@@ -8,9 +8,7 @@ using Command.UI;
 using Command.Events;
 using Command.Battle;
 using Command.Actions;
-using UnityEngine.UI;
 using Commands;
-using System;
 
 namespace Command.Main
 {
@@ -35,7 +33,6 @@ namespace Command.Main
         [SerializeField] private UIService uiService;
         public UIService UIService => uiService;
 
-
         // Scriptable Objects:
         [SerializeField] private SoundScriptableObject soundScriptableObject;
         [SerializeField] private List<BattleScriptableObject> battleScriptableObjects;
@@ -52,12 +49,12 @@ namespace Command.Main
             InputService = new InputService();
             BattleService = new BattleService(battleScriptableObjects);
             PlayerService = new PlayerService();
-            CommandInvoker = new CommandInvoker();
             uiService.Init(battleScriptableObjects.Count);
+            CommandInvoker = new CommandInvoker();
         }
 
         private void Update() => InputService.UpdateInputService();
 
-        public void ProcessUnitCommand(UnitCommand commandToProcess) => PlayerService.ProcessUnitCommand(commandToProcess as UnitCommand);
+        public void ProcessUnitCommand(ICommand commandToProcess) => PlayerService.ProcessUnitCommand(commandToProcess as UnitCommand);
     }
 }

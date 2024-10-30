@@ -24,7 +24,7 @@ namespace Command.Input
         public void TrySelectingTargetUnit()
         {
             Vector3 mouseWorldPosition = GetMouseWorldPosition();
-            if(IsTargetSelected(mouseWorldPosition, out UnitView selectedUnit))
+            if (IsTargetSelected(mouseWorldPosition, out UnitView selectedUnit))
                 inputService.OnTargetSelected(selectedUnit.Controller);
         }
 
@@ -38,10 +38,10 @@ namespace Command.Input
         {
             Collider2D collider = Physics2D.OverlapCircle(mousePosition, 0.1f);
 
-            if(IsUnit(collider))
+            if (IsUnit(collider))
             {
                 selectedUnit = collider.GetComponent<UnitView>();
-                if(ValidateUnit(selectedUnit))
+                if (ValidateUnit(selectedUnit))
                     return true;
             }
 
@@ -53,7 +53,7 @@ namespace Command.Input
 
         private bool ValidateUnit(UnitView selectedUnit)
         {
-            switch(targetTypeToSelect)
+            switch (targetTypeToSelect)
             {
                 case TargetType.Friendly:
                     return selectedUnit.Controller.Owner.PlayerID == GameService.Instance.PlayerService.ActivePlayerID && selectedUnit.Controller.IsAlive();
