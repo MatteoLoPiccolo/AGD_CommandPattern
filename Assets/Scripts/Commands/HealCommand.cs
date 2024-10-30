@@ -3,11 +3,11 @@ using Command.Actions;
 
 namespace Commands
 {
-    public class HealCommandCommand : UnitCommand
+    public class HealCommand : UnitCommand
     {
         private bool willHitTarget;
 
-        public HealCommandCommand(CommandData commandData)
+        public HealCommand(CommandData commandData)
         {
             this.commandData = commandData;
             willHitTarget = WillHitTarget();

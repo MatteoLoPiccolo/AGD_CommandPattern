@@ -70,7 +70,7 @@ namespace Command.Input
                 case CommandType.Attack:
                     return new AttackCommand(commandData);
                 case CommandType.Heal:
-                    return new HealCommandCommand(commandData);
+                    return new HealCommand(commandData);
                 case CommandType.AttackStance:
                     return new AttackStanceCommand(commandData);
                 case CommandType.Cleanse:
