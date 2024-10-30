@@ -88,6 +88,28 @@ namespace Command.Player
             units.Clear();
         }
 
+        public void ResetCurrentActiveUnit()
+        {
+            units[activeUnitIndex].ResetUnitIndicator();
+
+            activeUnitIndex--;
+
+            while(activeUnitIndex >= 0)
+            {
+                if (!units[activeUnitIndex].IsAlive())
+                {
+                    // Move to the previous unit in the list.
+                    activeUnitIndex--;
+                }
+                else
+                {
+                    // Activate the next living unit in the list and start its turn.
+                    units[activeUnitIndex].StartUnitTurn();
+                    break;
+                }
+            }
+        }
+
         // TODO:    What is this??
         public void ResetCurrentActivePlayer()
         {
