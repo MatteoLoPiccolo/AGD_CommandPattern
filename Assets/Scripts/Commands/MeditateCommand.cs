@@ -19,11 +19,14 @@ namespace Commands
 
         public override void Undo()
         {
-            //if (willHitTarget)
-            //{
-            //    targetUnit.TakeDamage(actorUnit.CurrentPower);
-            //    actorUnit.Owner.ResetCurrentActiveUnit();
-            //}
+            if (willHitTarget)
+            {
+                if (!targetUnit.IsAlive())
+                    targetUnit.Revive();
+
+                targetUnit.RestoreHealth(actorUnit.CurrentPower);
+                actorUnit.Owner.ResetCurrentActiveUnit();
+            }
         }
     }
 }
