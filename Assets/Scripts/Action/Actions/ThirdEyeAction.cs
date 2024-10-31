@@ -10,6 +10,7 @@ namespace Command.Actions
         private UnitController actorUnit;
         private UnitController targetUnit;
         private bool isSuccessful;
+
         public TargetType TargetType => TargetType.Self;
 
         public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
@@ -23,7 +24,7 @@ namespace Command.Actions
 
         public void OnActionAnimationCompleted()
         {
-            if (IsSuccessful())
+            if (isSuccessful)
             {
                 int healthToConvert = (int)(targetUnit.CurrentHealth * 0.25f);
                 targetUnit.TakeDamage(healthToConvert);
@@ -32,8 +33,6 @@ namespace Command.Actions
             else
                 GameService.Instance.UIService.ActionMissed();
         }
-
-        public bool IsSuccessful() => true;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
     }

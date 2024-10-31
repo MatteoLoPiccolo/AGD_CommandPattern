@@ -26,13 +26,11 @@ namespace Command.Actions
         {
             PlayAttackSound();
 
-            if (IsSuccessful())
+            if (isSuccessful)
                 targetUnit.TakeDamage(actorUnit.CurrentPower);
             else
                 GameService.Instance.UIService.ActionMissed();
         }
-
-        public bool IsSuccessful() => true;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
 
