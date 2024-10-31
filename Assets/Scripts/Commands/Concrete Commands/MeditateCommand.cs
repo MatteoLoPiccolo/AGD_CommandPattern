@@ -3,11 +3,11 @@ using Command.Actions;
 
 namespace Commands
 {
-    public class CleanseCommand : UnitCommand
+    public class MeditateCommand : UnitCommand
     {
         private bool willHitTarget;
 
-        public CleanseCommand(CommandData commandData)
+        public MeditateCommand(CommandData commandData)
         {
             this.commandData = commandData;
             willHitTarget = WillHitTarget();
@@ -15,7 +15,7 @@ namespace Commands
 
         public override bool WillHitTarget() => true;
 
-        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
+        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Meditate).PerformAction(actorUnit, targetUnit, willHitTarget);
 
         public override void Undo()
         {

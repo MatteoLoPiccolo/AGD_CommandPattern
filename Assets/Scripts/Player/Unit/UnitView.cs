@@ -41,5 +41,4 @@ namespace Command.Player
         HIT,
         DEATH
     }
-
 }

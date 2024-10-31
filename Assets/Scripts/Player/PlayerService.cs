@@ -1,4 +1,3 @@
-using Command.Actions;
 using Command.Main;
 using Commands;
 
@@ -12,8 +11,6 @@ namespace Command.Player
         private int currentTurnNumber;
         private PlayerController activePlayer;
 
-        private bool isSuccessful;
-
         public int ActivePlayerID => activePlayer.PlayerID;
         public int ActiveUnitID => activePlayer.ActiveUnitID;
 
@@ -26,7 +23,7 @@ namespace Command.Player
 
         private void CleanPlayers()
         {
-            if(player1 == null || player2 == null)
+            if (player1 == null || player2 == null)
                 return;
 
             player1.DestroyAllUnits();
@@ -48,13 +45,13 @@ namespace Command.Player
         private void StartNextTurn()
         {
             SetActivePlayer();
-            
+
             if (activePlayer == player1)
             {
                 currentTurnNumber++;
                 GameService.Instance.UIService.UpdateTurnNumber(currentTurnNumber);
             }
-            
+
             activePlayer.StartPlayerTurn();
         }
 
@@ -62,33 +59,11 @@ namespace Command.Player
         {
             if (activePlayer == null)
                 activePlayer = player1;
-            else 
+            else
                 activePlayer = activePlayer == player1 ? player2 : player1;
         }
 
-        private void SetUnitReferences(UnitCommand commandToProcess)
-        {
-            // Get actor and target units based on the command data.
-            var actorUnit = GetPlayerById(commandToProcess.commandData.ActorPlayerID).GetUnitByID(commandToProcess.commandData.ActorUnitID);
-            var targetUnit = GetPlayerById(commandToProcess.commandData.TargetPlayerID).GetUnitByID(commandToProcess.commandData.TargetUnitID);
-
-            // Set the actor and target units for the command.
-            commandToProcess.SetActorUnit(actorUnit);
-            commandToProcess.SetTargetUnit(targetUnit);
-        }
-
         public void OnPlayerTurnCompleted() => StartNextTurn();
-
-        public void PerformAction(CommandType actionSelected, UnitController targetUnit) => GameService.Instance.ActionService.GetActionByType(actionSelected).PerformAction(activePlayer.GetUnitByID(ActiveUnitID), targetUnit, isSuccessful);
-
-        public void ProcessUnitCommand(UnitCommand commandToProcess)
-        {
-            // Set unit references for the command.
-            SetUnitReferences(commandToProcess);
-
-            // Delegate unit command processing to the corresponding player.
-            GetPlayerById(commandToProcess.commandData.ActorPlayerID).ProcessUnitCommand(commandToProcess);
-        }
 
         public void PlayerDied(PlayerController deadPlayer)
         {
@@ -102,7 +77,21 @@ namespace Command.Player
             GameService.Instance.UIService.ShowBattleEndUI(winnerId);
         }
 
-        private PlayerController GetPlayerById(int playerId) 
+        public void ProcessUnitCommand(UnitCommand commandToProcess)
+        {
+            SetUnitReferences(commandToProcess);
+            GetPlayerById(commandToProcess.commandData.ActorPlayerID).ProcessUnitCommand(commandToProcess);
+        }
+
+        private void SetUnitReferences(UnitCommand commandToProcess)
+        {
+            var actorUnit = GetPlayerById(commandToProcess.commandData.ActorPlayerID).GetUnitByID(commandToProcess.commandData.ActorUnitID);
+            var targetUnit = GetPlayerById(commandToProcess.commandData.TargetPlayerID).GetUnitByID(commandToProcess.commandData.TargetUnitID);
+            commandToProcess.SetActorUnit(actorUnit);
+            commandToProcess.SetTargetUnit(targetUnit);
+        }
+
+        private PlayerController GetPlayerById(int playerId)
         {
             if (player1.PlayerID == playerId)
                 return player1;
@@ -119,7 +108,5 @@ namespace Command.Player
             else if (player2.AllUnitsDead())
                 PlayerDied(player2);
         }
-
-        
     }
 }

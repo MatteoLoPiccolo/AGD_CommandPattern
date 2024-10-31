@@ -3,11 +3,11 @@ using Command.Actions;
 
 namespace Commands
 {
-    public class AttackStanceCommand : UnitCommand
+    public class CleanseCommand : UnitCommand
     {
         private bool willHitTarget;
 
-        public AttackStanceCommand(CommandData commandData)
+        public CleanseCommand(CommandData commandData)
         {
             this.commandData = commandData;
             willHitTarget = WillHitTarget();
@@ -15,13 +15,16 @@ namespace Commands
 
         public override bool WillHitTarget() => true;
 
-        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
+        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Cleanse).PerformAction(actorUnit, targetUnit, willHitTarget);
 
         public override void Undo()
         {
             if (willHitTarget)
             {
-                targetUnit.CurrentPower -= (int)(targetUnit.CurrentPower * 0.2f);
+                if (!targetUnit.IsAlive())
+                    targetUnit.Revive();
+
+                targetUnit.RestoreHealth(actorUnit.CurrentPower);
                 actorUnit.Owner.ResetCurrentActiveUnit();
             }
         }

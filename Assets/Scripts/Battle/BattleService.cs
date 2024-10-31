@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEngine;
 using Command.Main;
-using UnityEngine.UI;
 
 namespace Command.Battle
 {

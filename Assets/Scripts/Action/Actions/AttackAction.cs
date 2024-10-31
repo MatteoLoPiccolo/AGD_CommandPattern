@@ -10,6 +10,7 @@ namespace Command.Actions
         private UnitController actorUnit;
         private UnitController targetUnit;
         private bool isSuccessful;
+
         public TargetType TargetType => TargetType.Enemy;
 
         public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
@@ -25,13 +26,11 @@ namespace Command.Actions
         {
             PlayAttackSound();
 
-            if (IsSuccessful())
+            if (isSuccessful)
                 targetUnit.TakeDamage(actorUnit.CurrentPower);
             else
                 GameService.Instance.UIService.ActionMissed();
         }
-
-        public bool IsSuccessful() => true;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
 

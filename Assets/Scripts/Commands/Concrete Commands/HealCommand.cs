@@ -3,11 +3,11 @@ using Command.Actions;
 
 namespace Commands
 {
-    public class BerserkAttackCommand : UnitCommand
+    public class HealCommand : UnitCommand
     {
         private bool willHitTarget;
 
-        public BerserkAttackCommand(CommandData commandData)
+        public HealCommand(CommandData commandData)
         {
             this.commandData = commandData;
             willHitTarget = WillHitTarget();
@@ -15,16 +15,13 @@ namespace Commands
 
         public override bool WillHitTarget() => true;
 
-        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
+        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Heal).PerformAction(actorUnit, targetUnit, willHitTarget);
 
         public override void Undo()
         {
             if (willHitTarget)
             {
-                if (!targetUnit.IsAlive())
-                    targetUnit.Revive();
-
-                targetUnit.RestoreHealth(actorUnit.CurrentPower);
+                targetUnit.TakeDamage(actorUnit.CurrentPower);
                 actorUnit.Owner.ResetCurrentActiveUnit();
             }
         }

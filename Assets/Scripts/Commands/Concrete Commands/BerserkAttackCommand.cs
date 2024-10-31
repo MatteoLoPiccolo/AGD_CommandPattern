@@ -3,11 +3,11 @@ using Command.Actions;
 
 namespace Commands
 {
-    public class ThirdEyeCommand : UnitCommand
+    public class BerserkAttackCommand : UnitCommand
     {
         private bool willHitTarget;
 
-        public ThirdEyeCommand(CommandData commandData)
+        public BerserkAttackCommand(CommandData commandData)
         {
             this.commandData = commandData;
             willHitTarget = WillHitTarget();
@@ -15,7 +15,7 @@ namespace Commands
 
         public override bool WillHitTarget() => true;
 
-        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.Attack).PerformAction(actorUnit, targetUnit, willHitTarget);
+        public override void Execute() => GameService.Instance.ActionService.GetActionByType(CommandType.BerserkAttack).PerformAction(actorUnit, targetUnit, willHitTarget);
 
         public override void Undo()
         {
